@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('mehome');
+    return view('welcome');
 });
 
 Route::get('/event', 'EventController@index');

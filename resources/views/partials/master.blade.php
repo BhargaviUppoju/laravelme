@@ -1,26 +1,18 @@
-<head>
-<base href="{{URL::asset('/')}}" target="_top">
-
-<link rel="stylesheet" href="{{{ URL::asset('css/bootstrap.min.css')}}}" />
-  <link rel="stylesheet" href="{{{ URL::asset('font-awesome/4.2.0/css/font-awesome.min.css')}}}" />
-  <link rel="stylesheet" href="{{{ URL::asset('css/theme.min.css') }}}" class="theme-stylesheet" id="theme-style" />
-  <link rel="stylesheet" href="{{{ URL::asset('fonts/fonts.googleapis.com.css')}}}" />
-  <script type="text/javascript" src="{{{ URL::asset('js/jquery.2.1.1.min.js')}}}"></script>
-  <script src="{{{ URL::asset('js/bootstrap.min.js')}}}"></script>
-  <script src="{{{ URL::asset('js/theme.min.js')}}}"></script>
-</head>
-<body class="no-skin">
 @include('partials.header')
-<div class="main-container" id="main-container">
-  @include('partials.sidebar')
-  <div class="main-content"> 
-    <div class="main-content-inner">
-      <div class="breadcrumbs" id="breadcrumbs">
-        
-      </div>
-      @yield('content') 
-    </div>
-  </div>
+<div ng-controller="filterController">
+<div class="page-container" >
+	<div class="wrap">
+		<div class="container HomeContainer">
+			<!-- Main component for a primary marketing message or call to action -->
+			<div class="search-container searchABC">
+				<input class="search form-control searchExpand icon-me_search"
+					   id="searchId" type="search"
+					   placeholder="Search by Event Name , Event ID , Kyey Words">
+<a class="search icon-me_search"></a>
+			</div>
+@include('partials.homefilter')                        
+
+    @yield('content') 
  @include('partials.footer')
 </div>
 </body>

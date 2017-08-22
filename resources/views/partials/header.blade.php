@@ -49,7 +49,7 @@
 <!--truesemantic feedback form -->
 
                     <link rel="stylesheet" href="https://static.meraevents.com/css/public/jquery-ui.min.css.gz?v=25">
-
+</head>
          <body class="single-winner" ng-app=homeModule>
                     <div id="dvLoading" class="loadingopacity" style="display:none;"><img src="https://static.meraevents.com/images/static/loading.gif" class="loadingimg" /></div>
                     <div id="menudvLoading" class="menuloadingopacity" style="display:none;"><img src="https://static.meraevents.com/images/static/loading.gif" class="menuloadingimg" /></div>       
@@ -140,4 +140,4 @@
                             </div>
                         </header>
                     </div>
-         </head>
+         
