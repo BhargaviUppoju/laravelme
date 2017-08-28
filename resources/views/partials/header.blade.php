@@ -124,7 +124,7 @@
                                              
                                                 <ul class="nav navbar-nav navbar-right">
                                                 <!--<li class="toppromobanner"><a href="http://www.meraevents.com/holi" target="_blank"><img src="https://static.meraevents.com/images/static/top-promo-holi-banner.gif" style="width: 350px; border-radius: 0;"></a></li>-->
-                                                                                                                                                                        <li class="off"><a href="http://www.meraevents.com/login" target="_self">Log In</a></li>
+                                                                                                                                                                        <li class="off"><a href="{{url('login')}}" target="_self">Log In</a></li>
                                                                                                                                                                 <li class="dropdown">
                                                         <a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">Help<span class="icon-downArrow"></span></a>
                                                         <ul style="margin-top: 24px;" role="menu" class="dropdown-menu">

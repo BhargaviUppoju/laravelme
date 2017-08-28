@@ -101,7 +101,8 @@ events happening <a class="btn time collapsed collapse_bt"
 <label ng-cloak>@{{category.name}}
 <span ng-cloak>@{{category.eventCount}}</span>
 </label>
-</a></li>
+</a>
+</li>
 <li>
 <a href="javascript:void(0)" title="All Categories"  ng-click="setFilter('category', 0, 'All Categories', 0,0)" >
 <label>All Categories <span ng-cloak>@{{allCategoryCount}}</span></label>
