@@ -32,6 +32,7 @@ class CreateEventTable extends Migration
                 $table->tinyInteger('deleted');
                 $table->string('banner');
                 $table->string('url');
+                $table->timestamps();
             });
         }
     }

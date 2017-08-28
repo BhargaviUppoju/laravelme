@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTicketTable extends Migration
+class CreateSubcategoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,15 @@ class CreateTicketTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('ticket'))
+        if (Schema::hasTable('subcategory'))
         {
             //
         }else{
-            Schema::create('ticket', function (Blueprint $table) {
+            Schema::create('subcategory', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('eventid');
+                $table->integer('categoryid');
                 $table->string('name');
-                $table->string('description');
-                $table->dateTime('startdatetime');
-                $table->dateTime('enddatetime');
-                $table->double('price');
-                $table->mediumInteger('quantity');
+                $table->string('value');
                 $table->tinyInteger('deleted');
                 $table->timestamps();
             });
@@ -39,6 +35,6 @@ class CreateTicketTable extends Migration
      */
     public function down()
     {
-        Schema::drop("ticket");
+        Schema::drop("subcategory");
     }
 }

@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property boolean $deleted
  * @property string $banner
  * @property string $url
+ * @property string $created_at
+ * @property string $updated_at
  */
 class Event extends Model
 {
@@ -32,6 +34,6 @@ class Event extends Model
     /**
      * @var array
      */
-    protected $fillable = ['title', 'description', 'venue', 'startdatetime', 'enddatetime', 'countryid', 'stateid', 'cityid', 'categoryid', 'subcategoryid', 'deleted', 'banner', 'url'];
+    protected $fillable = ['title', 'description', 'venue', 'startdatetime', 'enddatetime', 'countryid', 'stateid', 'cityid', 'categoryid', 'subcategoryid', 'deleted', 'banner', 'url', 'created_at', 'updated_at'];
 
 }
