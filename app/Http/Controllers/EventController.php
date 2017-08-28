@@ -22,4 +22,9 @@ class EventController extends Controller
         }
         return view('home');
     }
+    
+    public function createE(Request $request)
+    {
+        return view('create_event');
+    }
 }
