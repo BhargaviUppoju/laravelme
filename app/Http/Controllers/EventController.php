@@ -11,16 +11,16 @@ class EventController extends Controller
 //        $this->middleware('auth')->except('sample');
     }
     
-    public function index(Request $request)
+    public function index($id)
     {
-        $name = $request->input('name');
-        switch (1){
+        switch ($id){
             case 1 : 
+                return view('event');
                 break;
             case 2 : 
                 break;
         }
-        return view('home');
+//        return view('home');
     }
     
     public function createE(Request $request)

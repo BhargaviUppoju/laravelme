@@ -31,4 +31,4 @@ Route::get('/home','HomeController@index');
 Route::get('manage-item', 'ItemAjaxController@manageItemAjax');
 Route::resource('item-ajax', 'ItemAjaxController');
 Route::get('/sample','HomeController@sample');
-Route::get('createE','EventController@createE');
+Route::get('createE','CreateeventController@create');

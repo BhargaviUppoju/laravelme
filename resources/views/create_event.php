@@ -1,6 +1,4 @@
-<link rel="stylesheet" type="text/css" href="https://static.meraevents.com/css/public/me_custom.min.css.gz?v=28">
-<link rel="stylesheet" href="https://static.meraevents.com/css/public/jquery-ui.min.css.gz?v=28">
-<?php include(base_path('resources/views/partials/header.blade.php')); ?>
+<?php include('partials/header.blade.php'); ?>
 <!--important-->
 <div class="page-container">
     <div class="wrap">
@@ -19,17 +17,6 @@
                                     <div class="create-event-error">
                                         <ul id="eventDataErrors"></ul>
                                     </div>
-                                    <!--   <div class="form-group event_type">
-                                          <label>Event Type</label><br>
-                                          <input  type="radio" name="registrationType" value="2" 
-                                                 id="registrationType2" class = "selecteventtype ">
-                                          <label class="eventype_space">Paid</label>
-                                          <input   type="radio" name="registrationType" value="1" id="registrationType1" class = "selecteventtype " >
-                                          <label class="eventype_space">Free</label>
-                                          <input   type="radio" name="registrationType" value="3" id="registrationType3" class = "selecteventtype " >
-                                          <label class="eventype_space">No Registration</label>
-  
-                                      </div>-->
                                     <div class="form-group">
                                         <label>Event Title</label>
                                         <input autofocus="true" type="text" class="form-control eventFields" name="title" id="eventTitle" value="">
@@ -555,7 +542,7 @@
                 </div>
                 <!-- wrap --> 
             </div>   </div>
-        <?php include(base_path('resources/views/partials/footer.blade.php')); ?>
+        <?php include('partials/footer.blade.php'); ?>
 
 
 
