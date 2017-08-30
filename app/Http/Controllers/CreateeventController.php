@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Event;
+use App\SubCategory;
+use App\Category;
 
 class CreateeventController extends Controller
 {
@@ -23,7 +26,18 @@ class CreateeventController extends Controller
      */
     public function create()
     {
-        return view('create_event');
+        $catgs = Category::all();
+        foreach ($catgs as $flight) {
+            $id = $flight->id;
+            $data[$id]['id'] =  $id;
+            $data[$id]['name'] =  $flight->name;
+            $data[$id]['value'] =  $flight->value;
+        }
+//        print_r(array("category"=>$data));exit;
+//        $this->data = $data;
+//        $subcatgs = SubCategory::all();
+//        exit;
+        return view('create_event',array("category"=>$data));
     }
 
     /**
@@ -34,7 +48,8 @@ class CreateeventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        print_r($request->all());exit;
+         $create = Event::create($request->all());
     }
 
     /**

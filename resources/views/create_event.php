@@ -1,4 +1,5 @@
-<?php include('partials/header.blade.php'); ?>
+<?php
+include('partials/header.blade.php'); ?>
 <!--important-->
 <div class="page-container">
     <div class="wrap">
@@ -6,7 +7,7 @@
             <div class="innerPageContainer">
                 <h2 class="create_eve_title">Start here</h2>
                 <div class="row">
-                    <form enctype="multipart/form-data" name="createEventForm" id="createEventForm" method="POST"> 
+                    <form enctype="multipart/form-data" name="createEventForm" id="createEventForm" method="POST" action="<?php echo route('create-event.store') ?>"> 
                         <div class="col-md-8 col-xs-12 col-sm-12">
                             <div class="row create_eve_container create_eve_bg animated">
                                 <div class="col-sm-12 ">
@@ -32,10 +33,17 @@
                                                 <label for="Category">Category</label>
                                                 <a href="javascript:;" class="dropdown-togglep selectCategory" data-toggle="dropdown" role="button" aria-expanded="false" >Select a Category<span class="icon-downArrow"></span></a>
                                                 <ul class="dropdown-menu categorySelect" role="menu">
-                                                    <li onclick="categoryChanged('1', 'Entertainment', 'true', '#ba36a6');">
-                                                        <a>
-                                                            <i class="mecat-entertainment colentertainment"></i>entertainment                                                        </a>
+                                                    
+                                                            <?php 
+                                                            foreach ($category as $categid => $categArr) { ?>
+                                                    <li onclick="categoryChanged('<?php echo $categArr['id']; ?>', '<?php echo $categArr['value']; ?>', 'true', '#ba36a6');">
+                                                            <a><i class="mecat-entertainment colentertainment"></i>
+                                                            <?php echo $categArr['name']; ?>
+                                                                </a>
                                                     </li>
+                                                            <?php }
+                                                            ?>                                                        
+                                                    
                                                 </ul>
                                                 <span id="categoryError" class="create-event-error error"></span>
                                             </li>
@@ -50,7 +58,7 @@
 
                                     <div class="form-group eventTags fullwidth_form">
                                         <label>Event URL </label>
-                                        <span> http://www.meraevents.com/event/</span>
+                                        <span> <?php echo url('/'); ?>/event/</span>
                                         <input type="text" class="form-control eventFields tagsField " value="" name="url" id="eventUrl">
 
                                         <a onclick="checkUrlExists()" href="javascript:;" class="checkurl_btn">Check Availability</a>
