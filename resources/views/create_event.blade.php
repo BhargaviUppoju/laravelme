@@ -1,5 +1,5 @@
-<?php
-include('partials/header.blade.php'); ?>
+
+@include('partials.header')
 <!--important-->
 <div class="page-container">
     <div class="wrap">
@@ -8,6 +8,7 @@ include('partials/header.blade.php'); ?>
                 <h2 class="create_eve_title">Start here</h2>
                 <div class="row">
                     <form enctype="multipart/form-data" name="createEventForm" id="createEventForm" method="POST" action="<?php echo route('create-event.store') ?>"> 
+                       {{csrf_field()}}
                         <div class="col-md-8 col-xs-12 col-sm-12">
                             <div class="row create_eve_container create_eve_bg animated">
                                 <div class="col-sm-12 ">
@@ -550,7 +551,7 @@ include('partials/header.blade.php'); ?>
                 </div>
                 <!-- wrap --> 
             </div>   </div>
-        <?php include('partials/footer.blade.php'); ?>
+@include('partials.footer')
 
 
 

@@ -27,6 +27,7 @@ class CreateeventController extends Controller
     public function create()
     {
         $catgs = Category::all();
+        $data=array();
         foreach ($catgs as $flight) {
             $id = $flight->id;
             $data[$id]['id'] =  $id;
@@ -48,7 +49,7 @@ class CreateeventController extends Controller
      */
     public function store(Request $request)
     {
-        print_r($request->all());exit;
+         print_r($request->all());exit;
          $create = Event::create($request->all());
     }
 
