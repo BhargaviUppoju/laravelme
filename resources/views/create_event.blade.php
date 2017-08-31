@@ -1,5 +1,6 @@
 
-@include('partials.header')
+@extends('partials.master')
+@section('content')
 <!--important-->
 <div class="page-container">
     <div class="wrap">
@@ -551,9 +552,13 @@
                 </div>
                 <!-- wrap --> 
             </div>   </div>
-@include('partials.footer')
-
-
+        <script src="/js/create-event.js"></script>
+        <script src="https://static.meraevents.com/js/public/bootstrap-tagsinput.min.js.gz"></script>
+        <!--<script src="https://static.meraevents.com/js/public/tags-custom.min.js.gz"></script>-->
+        <script src="https://static.meraevents.com/js/public/bootstrap-timepicker.min.js.gz"></script>
+        <script src="https://static.meraevents.com/js/public/tinymce/tinymce.min.js.gz"></script>
+        <script src="https://static.meraevents.com/js/public/bootstrap-select.min.js.gz"></script>
+@endsection
 
 
 
