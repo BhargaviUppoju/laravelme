@@ -1,3 +1,4 @@
+var oldCity = '';
 var submitValue = 'save';
 $(document).ready(function () {
     $('#createEventForm').validate({
@@ -113,8 +114,8 @@ $(document).ready(function () {
                 $.each(other_data, function (key, input) {
                     fd.append(input.name, input.value);
                 });
-				/*var description = tinymce.get('event-desc').getContent();
-				console.log(description);*/
+                /*var description = tinymce.get('event-desc').getContent();
+                 console.log(description);*/
                 var description = $('#event-desc').val();
                 fd.append("subCategoryName", subCategoryName);
                 fd.append("subcategoryId", subCategoryName);
@@ -127,12 +128,12 @@ $(document).ready(function () {
                 if (thumbSrc !== undefined) {
                     fd.append('thumbSource', thumbSrc);
                 }
-                var bannerRemove =$('#bannerImage').attr('remove-banner');
-                var thumbRemove =$('#thumbImage').attr('remove-thumb');
-                if(bannerRemove == 1) {
+                var bannerRemove = $('#bannerImage').attr('remove-banner');
+                var thumbRemove = $('#thumbImage').attr('remove-thumb');
+                if (bannerRemove == 1) {
                     fd.append('removebannerSource', bannerRemove);
                 }
-                 if(thumbRemove == 1) {
+                if (thumbRemove == 1) {
                     fd.append('removethumbSource', thumbRemove);
                 }
                 var tags = $("#event_tags").tagsinput('items');
@@ -141,7 +142,7 @@ $(document).ready(function () {
                     submitURL = api_eventEdit;
                 }
                 var url = submitURL;
-                
+
                 $.ajax({
                     method: 'POST',
                     url: url,
@@ -218,20 +219,20 @@ $(document).ready(function () {
                     $('#eventDataErrors').html('');
                     $('#eventDataSuccess').html('');
                     if (typeof data.responseJSON.response.messages !== 'undefined') {
-                    $.each(data.responseJSON.response.messages, function (key, value) {
-                        $('#eventDataErrors').append("<li>" + value + "</li>");
-                    });
+                        $.each(data.responseJSON.response.messages, function (key, value) {
+                            $('#eventDataErrors').append("<li>" + value + "</li>");
+                        });
                         $('html, body').animate({
                             scrollTop: 0}, 100);
                     } else if (typeof data.responseJSON.response.ticketmessages !== 'undefined') {
                         $('html, body').animate({scrollTop: $('.create_eve_tickets').eq(0).position().top}, 'slow');
-                        var openTabNotReq=["ticketType","ticketName","order","price"];
+                        var openTabNotReq = ["ticketType", "ticketName", "order", "price"];
                         $.each(data.responseJSON.response.ticketmessages, function (key, value) {
                             $.each(value, function (key1, value1) {
                                 $('.' + key1 + 'Error').eq(key).text(value1);
-                                $('.'+key1+'Error').eq(key).show();
-                                if($.inArray(key1,openTabNotReq) == -1 && !$('#setting_content'+key).is(":visible")){
-                                    $('#setting_content'+key).slideToggle('slow')
+                                $('.' + key1 + 'Error').eq(key).show();
+                                if ($.inArray(key1, openTabNotReq) == -1 && !$('#setting_content' + key).is(":visible")) {
+                                    $('#setting_content' + key).slideToggle('slow')
                                 }
                             });
                             //  $('#eventDataErrors').append("<li>" + value + "</li>");
@@ -329,7 +330,7 @@ $(document).ready(function () {
 
     $('#acceptmeeffortcommission').change(function () {
         additionalCommission();
-});
+    });
 });
 $('#bannerImage').on('click', function () {
     this.files = null;
@@ -440,6 +441,170 @@ function categoryChanged(catId, catName, catstatus, themeColor) {
 
 }
 $(function () {
+    oldCity = $('#city').val();
+    initialize();
+    //    customCheckbox();
+
+
+    $("body").on("click", ".settingsIcosn", function (e) {
+
+        var countryName = $('#country').val();
+        var stateName = $('#state').val();
+        var cityName = $('#city').val();
+        $(this).parents("ul").find("div.setting_content").slideToggle('slow');
+    });
+
+    $('#div_ticketwidget').on('change', '.soldoutCheckbox', function () {
+
+        if ($(this).is(':checked')) {
+            $(this).next().remove();
+            $(this).parent().addClass("selected");
+        } else {
+            $(this).parent().removeClass("selected");
+            var elementType = $(this).next().attr('type');
+        }
+
+    });
+    $('#div_ticketwidget').on('change', '.nottodisplayCheckbox', function () {
+        if ($(this).is(':checked')) {
+            $(this).next().remove();
+            $(this).parent().addClass("selected");
+        } else {
+            $(this).parent().removeClass("selected");
+            var elementType = $(this).next().attr('type');
+
+        }
+
+    });
+    $('#div_ticketwidget').on('change', '.taxCheckBox', function () {
+        if (typeof ($(this).attr('ticketsold')) == 'undefined') {
+            if ($(this).is(':checked')) {
+                $(this).attr('checked', 'checked');
+                $(this).parent().addClass("selected");
+            } else {
+                $(this).removeAttr('checked');
+                $(this).parent().removeClass("selected");
+                return false;
+            }
+        } else {
+            return false;
+        }
+    });
+
+    //setting the tags on changes of subcategory, city
+    $("#subCategoryName").blur(function () {
+
+        if ($(this).val() != '') {
+            var subcatNewTitleArray = [$.trim($(this).val())];
+//            if ($(this).val().indexOf('-') > -1) {
+//                subcatNewTitleArray = $(this).val().split("-");
+//            } else 
+            if ($(this).val().indexOf('&') > -1 || $(this).val().indexOf(',') > -1) {
+                //subcatNewTitleArray = $(this).val().split("&");
+                var subcatNewTitleArray = [];
+                $.each($(this).val().replace(",", "&").split("&"), function (key, value) {
+                    if (value.indexOf(',') > -1) {
+                        $.each(value.split(","), function (key1, value1) {
+                            subcatNewTitleArray.push($.trim(value1));
+                        });
+                    } else {
+                        subcatNewTitleArray.push($.trim(value));
+                    }
+                });
+            }
+            var oldSubcatLength = oldSubcat.length;
+            for (var osc = 0; osc < oldSubcatLength; osc++) {
+                if ($('#addedCategories').val() != oldSubcat) {
+                    $('#event_tags').tagsinput('remove', oldSubcat[osc].toLowerCase());
+                }
+            }
+            if ($.isArray(subcatNewTitleArray)) {
+                var tagLength = subcatNewTitleArray.length;
+                for (var tg = 0; tg < tagLength; tg++) {
+                    $('#event_tags').tagsinput('add', subcatNewTitleArray[tg].toLowerCase());
+                }
+            } else {
+                $('#event_tags').tagsinput('add', subcatNewTitleArray.toLowerCase());
+            }
+            oldSubcat = subcatNewTitleArray;
+            var readonly = $('#eventUrl').attr('readonly');
+            if (typeof readonly === typeof undefined && readonly === false) {
+                $('#eventUrl').focus();
+            } else {
+
+            }
+
+        }
+    });
+    $('#eventUrl').keyup(function () {
+        $(this).valid();
+        if ($(this).hasClass('error')) {
+            $('#checkUrlAvail').hide();
+        }
+    });
+    $('#city').blur(function () {
+        var countryValid = $('#country').valid();
+        var stateValid = $('#state').valid();
+        if ($(this).val().toLowerCase().length > 0) {
+            $('#event_tags').tagsinput('remove', oldCity.toLowerCase());
+            $('#event_tags').tagsinput('remove', oldCity.toLowerCase());
+            $('#event_tags').tagsinput('add', $(this).val().toLowerCase());
+        }
+        oldCity = $(this).val();
+        if ($('#country').val() == '') {
+            $('#state').val();
+            $(this).val('');
+            $('#country').focus();
+        } else if ($('#state').val() == '') {
+            $(this).val('');
+            $('#state').focus();
+        } else {
+            if ($(this).val() != '') {
+                $('#pincode').val('');
+                $('#pincode').focus();
+            }
+        }
+        /*if ($('#start_date').is(':disabled')) {
+         $('#end_date').focus();
+         } else {
+         $('#start_date').focus();
+         }*/
+    });
+
+    $("#subCategoryName").keyup(function (e) {
+        var subCatvValu = $(this).val();
+        subCatvValu = subCatvValu.replace(/[0-9]/g, "");
+        subCatvValu = subCatvValu.replace(/[!@#$^#()$~%'":*?<>{}=]/g, '');
+        $('#subCategoryName').val(subCatvValu);
+
+    });
+
+    if ($('#eventId').val() == 0) {
+        var eventDate = jqNowDate();
+        $('#start_date').val(eventDate);
+        $('#end_date').val(eventDate);
+    }
+
+    //$('#event_tags').tagsinput();
+});//Main function
+$(document).on('click', '#clearVenue', function (e) {
+    e.preventDefault();
+    var empty = ''
+    document.getElementById('eventVenue').value = empty;
+    document.getElementById('eventAddress1').value = empty;
+    document.getElementById('eventAddress2').value = empty;
+    document.getElementById('city').value = empty;
+    document.getElementById('state').value = empty;
+    document.getElementById('country').value = empty;
+    $('#event_tags').tagsinput('remove', oldCity.toLowerCase());
+    $('#eventVenue').focus();
+    oldCity = '';
+    if ($('.addAdd').html() == '-') {
+        $('.addAdd').html('+');
+        $('.add_address').toggle('fast');
+    }
+});
+$(function () {
 
     $("#editurl").hide();
     $("#eventVenue").delay(800).css({backgroundColor: 'none !important;'});
@@ -469,7 +634,7 @@ $(function () {
             var defdate = defaultDates();
             var eventstartdatetime = new Date(Date.parse($('#start_date').val() + " " + $('#event_start').val()));
             var eventenddatetime = new Date(Date.parse(defdate.currentdate + " " + defdate.defaultstarttime));
-            if(eventstartdatetime < eventenddatetime){
+            if (eventstartdatetime < eventenddatetime) {
                 changeTicketEndDate(selectedDate);
             }
         }
@@ -485,7 +650,7 @@ $(function () {
     }
     //edit event
     if ($('#eventId').val() > 0) {
-        if($('#userType').val() !== 'undefined' && $('#userType').val() != "superadmin"){ 
+        if ($('#userType').val() !== 'undefined' && $('#userType').val() != "superadmin") {
             $("#end_date").datepicker("option", "minDate", new Date());
         }
         $("#event_end, .event_end_time, #event_start,.event_start_time").timepicker();
@@ -585,3 +750,236 @@ function initailizeDates() {
     $('#starttime0').timepicker();
     $('#endtime0').timepicker();
 }
+
+/* Functions for Filling google address */
+
+var placeSearch, autocomplete;
+var componentForm = {
+    neighborhood: 'long_name',
+    premise: 'long_name',
+    route: 'long_name',
+    sublocality_level_1: 'long_name',
+    sublocality_level_2: 'long_name',
+    locality: 'long_name',
+    administrative_area_level_1: 'long_name',
+    country: 'long_name'
+};
+
+function initialize() {
+    // Create the autocomplete object, restricting the search
+    // to geographical location types.
+
+    var map = new google.maps.Map(document.getElementById('eventVenue'), {
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var input = (document.getElementById('eventVenue'));
+
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+    var autocomplete = new google.maps.places.Autocomplete((input));
+
+    /* autocomplete = new google.maps.places.Autocomplete(
+     (document.getElementById('locationInputField')),
+     { types: ['geocode'] });*/
+    // When the user selects an address from the dropdown,
+    // populate the address fields in the form.
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+
+        var place = autocomplete.getPlace();
+        fillInAddress(place);
+        setTimeout(function () {
+            $('#address').show();
+            $('.addAdd').html('-');
+            $('#eventAddress1').focus();
+
+        }, 500);
+    });
+
+}
+
+// [START region_fillform]
+function fillInAddress(place) {
+    $('.add_address').toggle('fast');
+    $('.setting_content').hide();
+    if ($('.addAdd').html() == '+') {
+        $('.addAdd').html('-');
+    } else {
+        $('.addAdd').html('+');
+    }
+
+    for (var component in componentForm) {
+        //console.log(component);
+        if ($.inArray(component, ignoreArray) > -1) {
+            document.getElementById(component).value = '';
+            document.getElementById(component).disabled = false;
+        }
+    }
+    if (place.length == 0) {
+        return;
+    }
+    var ignoreArray = ['route', 'sublocality_level_2', 'premise'];
+
+    // Get each component of the address from the place details
+    // and fill the corresponding field on the form.
+    var pincode = place.address_components[place.address_components.length - 1].long_name;
+    var adddressObj = {};
+    for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        if (componentForm[addressType]) {
+            var val = place.address_components[i][componentForm[addressType]];
+            adddressObj[addressType] = val;
+        }
+    }
+//    console.dir(adddressObj);
+    var venue = '';
+    var addr1 = '';
+    var addr2 = '';
+    var state = '';
+    var city = '';
+    venue = place.name;
+    if (adddressObj.administrative_area_level_1) {
+        state = adddressObj.administrative_area_level_1;
+    }
+
+    if (adddressObj.locality) {
+        city = adddressObj.locality;
+    }
+
+    if (adddressObj.premise && venue == '') {
+        venue = adddressObj.premise;
+    }
+
+    if (adddressObj.route) {
+        addr1 += adddressObj.route + ', ';
+        if (venue == '') {
+            venue = adddressObj.route;
+        }
+    }
+    if (adddressObj.neighborhood) {
+        addr1 += adddressObj.neighborhood + ', ';
+        if (venue == '') {
+            venue = adddressObj.neighborhood;
+        }
+    }
+
+    if (adddressObj.sublocality_level_1) {
+        addr2 += adddressObj.sublocality_level_1 + ', ';
+        if (venue == '') {
+            venue = adddressObj.sublocality_level_1;
+        }
+    }
+    if (adddressObj.sublocality_level_2) {
+        addr2 += adddressObj.sublocality_level_2 + ', ';
+        if (venue == '') {
+            venue = adddressObj.sublocality_level_2;
+        }
+    }
+
+    if (addr1.length > 0) {
+        addr1 = addr1.substr(0, addr1.length - 2);
+    }
+    if (addr2.length > 0) {
+        addr2 = addr2.substr(0, addr2.length - 2);
+    }
+
+    if ($.trim(venue) == '') {
+        venue = city;
+        if ($.trim(addr1) != '') {
+            venue = addr1;
+        }
+    }
+    if ($.trim(addr1) == '') {
+        addr1 = city;
+        if ($.trim(addr2) != '') {
+            addr1 = addr2;
+            addr2 = "";
+        }
+    }
+    if (pincode && !isNaN(pincode)) {
+        document.getElementById('pincode').value = pincode;
+    }
+    document.getElementById('eventVenue').value = venue;
+    document.getElementById('eventAddress1').value = addr1;
+    document.getElementById('eventAddress2').value = addr2;
+//    document.getElementById('city_value').value = city;
+//    document.getElementById('state_value').value = state;
+//    document.getElementById('country_value').value = adddressObj.country;
+    document.getElementById('city').value = city;
+    document.getElementById('state').value = state;
+    document.getElementById('country').value = adddressObj.country;
+    $('#event_tags').tagsinput('remove', oldCity.toLowerCase());
+    $('#event_tags').tagsinput('add', city.toLowerCase());
+    $('#eventAddress1').focus();
+    $('#city').valid();
+    $('#country').valid();
+    $('#state').valid();
+    var latitude = place.geometry.location.lat();
+    var longitude = place.geometry.location.lng();
+    $('#latitude').val(latitude);
+    $('#longitude').val(longitude);
+
+    oldCity = city;
+    var country = adddressObj.country;
+    var data = {};
+    data.keyWord = country;
+    url = api_countrySearch;
+    $.ajax({
+        method: 'GET',
+        url: url,
+        data: data,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'bearer 930332c8a6bf5f0850bd49c1627ced2092631250'}
+    }).success(function (data) {
+        gettaxes();
+        if (data.response.total > 0) {
+            var countryId = data.response.countryList[0].id;
+            var data = {};
+            data.countryId = countryId;
+            url = api_countryDetails;
+            $.ajax({
+                method: 'GET',
+                url: url,
+                data: data,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'bearer 930332c8a6bf5f0850bd49c1627ced2092631250'}
+            }).success(function (data) {
+                var timeZoneId = data.response.timezoneId;
+                if (timeZoneId) {
+                    $("#timeZoneId > [value=" + timeZoneId + "]").attr("selected", "true");
+                } else {
+                    alert('No TimeZone');
+                }
+
+            }).error(function (data) {
+                alert('Something went wrong please try again');
+            });
+        } else {
+            alert('No Country');
+        }
+    }).error(function (data) {
+        alert('Something went wrong please try again');
+    });
+
+
+
+}
+// [END region_fillform]
+
+// [START region_geolocation]
+// Bias the autocomplete object to the user's geographical location,
+// as supplied by the browser's 'navigator.geolocation' object.
+function geolocate() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var geolocation = new google.maps.LatLng(
+                    position.coords.latitude, position.coords.longitude);
+            var circle = new google.maps.Circle({
+                center: geolocation,
+                radius: position.coords.accuracy
+            });
+            autocomplete.setBounds(circle.getBounds());
+        });
+    }
+}
+

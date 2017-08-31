@@ -1,4 +1,3 @@
-
 @extends('partials.master')
 @section('content')
 <!--important-->
@@ -558,6 +557,8 @@
         <script src="https://static.meraevents.com/js/public/bootstrap-timepicker.min.js.gz"></script>
         <script src="https://static.meraevents.com/js/public/tinymce/tinymce.min.js.gz"></script>
         <script src="https://static.meraevents.com/js/public/bootstrap-select.min.js.gz"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyAn4IGHT0Rtru5-28_g6LOwTfAqCHCk4lM"></script>
+
 @endsection
 
 
